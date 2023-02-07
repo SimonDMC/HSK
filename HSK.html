@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/c7b17cb045.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.2.0/popup.min.js"></script>
+    <!-- <script src="./scripts/popup.js"></script> -->
+    <script src="./HSK-firebase.js"></script>
+    <script type="module" src="./HSK.js"></script>
+    <link rel="stylesheet" href="./HSK.css">
+    <link rel="shortcut icon" href="./HSK.ico">
+    <link rel="apple-touch-icon" href="./HSK-192.png" />
+    <link rel="manifest" href="./HSK-manifest.json" />
+    <!-- embed -->
+    <meta content="HSK Practice" property="og:title" />
+    <meta content="A tool developed to assist with learning Mandarin along the HSK course" property="og:description" />
+    <meta name="description" content="A tool developed to assist with learning Mandarin along the HSK course" />
+    <meta content="https://simondmc.com/HSK" property="og:url" />
+    <meta content="https://simondmc.com/media/HSKlearning.png" property="og:image" />
+    <meta content="#8DB7DD" data-react-helmet="true" name="theme-color" />
+    <meta name="twitter:card" content="summary_large_image">
+    <title>HSK Practice</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="center">
+            <div class="progress-bar">
+                <span class="progress"></span>
+                <div class="bar">
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div class="main-box">
+                <div class="top"></div>
+                <div class="middle"></div>
+                <div class="bottom"></div>
+            </div>
+        </div>
+        <div class="switches">
+            <div class="top">
+                <div class="left">
+                    <div>我</div>
+                    <div>wǒ</div>
+                    <div>me</div>
+                </div>
+                <div class="right">
+                    <div><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                    <div><i class="fa-solid fa-shuffle"></i></div>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="left">
+                    <div class="fullscreen"><i class="fa-solid fa-expand"></i></div>
+                </div>
+                <div class="right">
+                    <div class="open-sets"><i class="fa-solid fa-list"></i></div>
+                    <div class="open-settings"><i class="fa-solid fa-gear"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="arrows">
+            <div class="arrow-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="62" viewBox="0 0 34 62" fill="none"
+                    class="leftArrow">
+                    <path d="M31 3L3 31L31 59" stroke="var(--text-color)" stroke-width="5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="62" viewBox="0 0 34 62" fill="none"
+                    class="rightArrow">
+                    <path d="M3 3L31 31L3 59" stroke="var(--text-color)" stroke-width="5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
