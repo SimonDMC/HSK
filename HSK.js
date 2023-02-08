@@ -11,12 +11,14 @@ let data = {};
 let settings, setsPopup;
 let sets = {};
 let selectedSet = "hsk4l3";
+let offline = false;
 
 // support offline
 try {
     docRef = db.collection("sets").doc("main");
     getData();
 } catch (e) {
+    offline = true;
     console.log("Offline mode.");
     buildSets({});
     docLoad();
@@ -240,7 +242,12 @@ function init() {
 
 function reset(id) {
     // copy words into ordered
-    orderedWords = JSON.parse(localStorage.getItem("HSK")).orderedWords;
+    if (offline) {
+        orderedWords = JSON.parse(localStorage.getItem("HSK")).orderedWords;
+    } else {
+        orderedWords = sets[id][1].slice();
+    }
+
     // if shuffle is selected, shuffle copied array
     if (orderMode == 1) {
         shuffle(orderedWords);
