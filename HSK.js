@@ -208,7 +208,6 @@ function buildSets(data) {
         titleMargin: "4vh",
         lineSpacing: "0",
         buttonWidth: "100%",
-        dynamicHeight: true,
     });
 }
 
