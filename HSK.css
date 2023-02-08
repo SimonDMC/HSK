@@ -314,3 +314,7 @@ body {
 .top-row>button {
     margin-left: 1%;
 }
+
+.error {
+    line-height: 1.3em;
+}

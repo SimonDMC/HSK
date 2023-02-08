@@ -1,13 +1,4 @@
-const docRef = db.collection("sets").doc("main");
-getData();
-
-// get data from firestore
-async function getData() {
-    await docRef.get().then((doc) => {
-        buildSets(doc.data());
-        docLoad();
-    });
-}
+let docRef;
 
 let words = [];
 let orderedWords = [];
@@ -20,6 +11,24 @@ let data = {};
 let settings, setsPopup;
 let sets = {};
 let selectedSet = "hsk4l3";
+
+// support offline
+try {
+    docRef = db.collection("sets").doc("main");
+    getData();
+} catch (e) {
+    console.log("Offline mode.");
+    buildSets({});
+    docLoad();
+}
+
+// get data from firestore
+async function getData() {
+    await docRef.get().then((doc) => {
+        buildSets(doc.data());
+        docLoad();
+    });
+}
 
 // load data from local storage
 if (localStorage.getItem("HSK")) {
@@ -36,7 +45,7 @@ if (localStorage.getItem("HSK")) {
 }
 
 // wait until firebase data loads
-let docLoad = () => {
+function docLoad() {
     settings = new Popup({
         id: "settings",
         title: "Settings",
@@ -93,7 +102,7 @@ let docLoad = () => {
     });
 
     init();
-};
+}
 
 // assign arrow key presses
 document.onkeydown = function (e) {
@@ -138,9 +147,13 @@ document.addEventListener("touchend", (e) => {
 });
 
 // popup buttons
-let openSettings = () => settings.show();
-let openSets = () => setsPopup.show();
-let fullscreen = () => {
+function openSettings() {
+    settings.show();
+}
+function openSets() {
+    setsPopup.show();
+}
+function fullscreen() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
         $(".fullscreen").html('<i class="fa-solid fa-expand"></i>');
@@ -148,10 +161,10 @@ let fullscreen = () => {
         document.documentElement.requestFullscreen();
         $(".fullscreen").html('<i class="fa-solid fa-compress"></i>');
     }
-};
+}
 
 // create sets popup and assigns sets
-let buildSets = (data) => {
+function buildSets(data) {
     for (let set in data) {
         // retrieve name of set from JSON
         let setData = JSON.parse(data[set]);
@@ -176,6 +189,11 @@ let buildSets = (data) => {
 
     for (let set in sets) content += `{btn-set-btn ${set}}[${sets[set][0]}]\n`;
 
+    // error if no sets (offline)
+    if (content == "")
+        content = `error§Sets unavailable offline. 
+        error§Please connect to the internet.`;
+
     setsPopup = new Popup({
         id: "sets",
         title: "Sets",
@@ -190,18 +208,18 @@ let buildSets = (data) => {
         buttonWidth: "100%",
         dynamicHeight: true,
     });
-};
+}
 
-let switchSets = (e) => {
+function switchSets(e) {
     let set = e.target.classList[1];
     selectedSet = set;
     $(".set-btn").removeClass("active");
     $("." + set).addClass("active");
     setsPopup.hide();
     reset(set);
-};
+}
 
-let init = () => {
+function init() {
     // check if data is empty (not loaded from localstorage)
     if (Object.keys(data).length === 0) {
         // no loaded data
@@ -218,11 +236,11 @@ let init = () => {
         );
         update();
     }
-};
+}
 
-let reset = (id) => {
+function reset(id) {
     // copy words into ordered
-    orderedWords = sets[id][1].slice();
+    orderedWords = JSON.parse(localStorage.getItem("HSK")).orderedWords;
     // if shuffle is selected, shuffle copied array
     if (orderMode == 1) {
         shuffle(orderedWords);
@@ -231,9 +249,9 @@ let reset = (id) => {
     // reset progress
     pos = 0;
     update();
-};
+}
 
-let flipCard = () => {
+function flipCard() {
     if (revealed) update();
     else {
         $(".main-box :nth-child(2)").text(orderedWords[pos][0]);
@@ -249,24 +267,24 @@ let flipCard = () => {
         $(".main-box div").css("color", "var(--text-color)");
         revealed = true;
     }
-};
+}
 
-let next = () => {
+function next() {
     pos += 1;
     if (pos >= orderedWords.length) pos = 0;
     update();
-};
+}
 
-let prev = () => {
+function prev() {
     pos -= 1;
     if (pos < 0) {
         pos = 0;
         return;
     }
     update();
-};
+}
 
-let update = () => {
+function update() {
     revealed = false;
 
     // update progress
@@ -301,9 +319,9 @@ let update = () => {
     }
 
     saveData();
-};
+}
 
-let saveData = () => {
+function saveData() {
     data.displayMode = displayMode;
     data.orderMode = orderMode;
     data.pos = pos;
@@ -311,7 +329,7 @@ let saveData = () => {
     data.lightMode = lightMode;
     data.selectedSet = selectedSet;
     localStorage.setItem("HSK", JSON.stringify(data));
-};
+}
 
 /* utility functions */
 

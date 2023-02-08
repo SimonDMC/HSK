@@ -5,11 +5,11 @@ const firebaseConfig = {
     storageBucket: "hskpractice.appspot.com",
     messagingSenderId: "523016575652",
     appId: "1:523016575652:web:b5d85f3694a4c7e151a431",
-    measurementId: "G-QWJSSJJHJ1"
-  };
+    measurementId: "G-QWJSSJJHJ1",
+};
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-  // Initialize Firestore
-  const db = firebase.firestore();
+// Initialize Firestore
+const db = firebase.firestore();
