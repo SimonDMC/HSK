@@ -15,6 +15,9 @@ let offline = false;
 
 // support offline
 try {
+    // check if user is online
+    if (!navigator.onLine) throw new Error("Offline");
+
     docRef = db.collection("sets").doc("main");
     getData();
 } catch (e) {
