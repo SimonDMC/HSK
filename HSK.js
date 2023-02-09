@@ -24,6 +24,25 @@ try {
     docLoad();
 }
 
+// register service worker
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").then(
+            function (registration) {
+                // Registration was successful
+                console.log(
+                    "Service worker registered with scope:",
+                    registration.scope
+                );
+            },
+            function (err) {
+                // Registration failed
+                console.log("Service worker registration failed: ", err);
+            }
+        );
+    });
+}
+
 // get data from firestore
 async function getData() {
     await docRef.get().then((doc) => {
