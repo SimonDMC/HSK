@@ -1,7 +1,3 @@
-self.addEventListener("install", (event) => {
-    console.log("Version 1.0.0");
-});
-
 self.addEventListener("fetch", (event) => {
     // add to cache on network hit (network first)
     event.respondWith(
@@ -11,6 +7,7 @@ self.addEventListener("fetch", (event) => {
 
                 // don't cache HSK-firebase.js because it only works when online (set as empty file)
                 if (event.request.url.includes("HSK-firebase.js")) {
+                    console.log("Caching offline HSK-firebase.js");
                     cache.put(event.request, new Response("", { status: 200 }));
                     return response;
                 }
